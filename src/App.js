@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   Button,
   Container,
@@ -9,7 +9,7 @@ import {
 } from "react-bootstrap";
 import chatbot from "./images/logo-chatbot.png";
 
-const ChatLayout = ({ messages }) => {
+const ChatLayout = ({ messages, endOfMessagesRef }) => {
   return (
     <Container className="p-0">
       {messages.map((msg, index) => (
@@ -52,11 +52,14 @@ const ChatLayout = ({ messages }) => {
           )}
         </div>
       ))}
+      <div ref={endOfMessagesRef} />
     </Container>
   );
 };
 
 const ChatPopover = () => {
+  const endOfMessagesRef = useRef(null);
+
   const [showChat, setShowChat] = useState(false);
   const [text, setText] = useState("");
   const [messages, setMessages] = useState([
@@ -90,6 +93,16 @@ const ChatPopover = () => {
         },
       ];
     });
+    handleScrollToEnd();
+  };
+
+  const handleScrollToEnd = () => {
+    setTimeout(() => {
+      endOfMessagesRef.current.scrollIntoView({
+        block: "end",
+        behavior: "smooth",
+      });
+    }, 50);
   };
 
   return (
@@ -110,7 +123,10 @@ const ChatPopover = () => {
             <Popover.Header as="h3">Trò chuyện với AI</Popover.Header>
             <Popover.Body>
               <div style={{ height: "300px", overflowY: "auto" }}>
-                <ChatLayout messages={messages} />
+                <ChatLayout
+                  messages={messages}
+                  endOfMessagesRef={endOfMessagesRef}
+                />
               </div>
               <div className="d-flex align-items-center gap-2  mt-2">
                 <input
