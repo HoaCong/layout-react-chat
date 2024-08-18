@@ -77,19 +77,21 @@ const ChatPopover = () => {
     setText(target.value);
   };
   const handleSendMessage = () => {
-    setMessages((prev) => {
-      const newMsg = text;
-      setText("");
-      return [
-        ...prev,
-        {
-          sender: "user",
-          text: newMsg,
-          time: new Date(),
-        },
-      ];
-    });
-    handleScrollToEnd();
+    if (!!text) {
+      setMessages((prev) => {
+        const newMsg = text;
+        setText("");
+        return [
+          ...prev,
+          {
+            sender: "user",
+            text: newMsg,
+            time: new Date(),
+          },
+        ];
+      });
+      handleScrollToEnd();
+    }
   };
 
   const handleScrollToEnd = () => {
