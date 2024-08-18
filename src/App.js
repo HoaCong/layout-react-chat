@@ -3,6 +3,7 @@ import React, { useRef, useState } from "react";
 import {
   Button,
   Container,
+  Form,
   Image,
   OverlayTrigger,
   Popover,
@@ -23,31 +24,26 @@ const ChatLayout = ({ messages, endOfMessagesRef }) => {
                 className="me-2"
               />
               <div
-                className="bg-primary text-white p-3 rounded"
+                className="bg-primary text-white p-2 rounded-4"
                 style={{ maxWidth: "350px", width: "max-content" }}
               >
                 <div>{msg.text}</div>
                 <div className="text-light small mt-1">
-                  {format(new Date(msg.time), "MM-dd HH:mm a")}
+                  {format(new Date(msg.time), "HH:mm")}
                 </div>
               </div>
             </div>
           ) : (
             <div className="d-flex flex-row-reverse align-items-start">
               <div
-                className="bg-secondary text-white p-3 rounded"
+                className="bg-secondary text-white p-2 rounded-4"
                 style={{ maxWidth: "350px", width: "max-content" }}
               >
                 <div>{msg.text}</div>
                 <div className="text-light small mt-1 text-end">
-                  {format(new Date(msg.time), "MM-dd HH:mm a")}
+                  {format(new Date(msg.time), "HH:mm")}
                 </div>
               </div>
-              <div
-                style={{ width: "40px", height: "40px" }}
-                className="me-2"
-              ></div>{" "}
-              {/* Placeholder for user avatar */}
             </div>
           )}
         </div>
@@ -65,15 +61,15 @@ const ChatPopover = () => {
   const [messages, setMessages] = useState([
     {
       sender: "bot",
-      text: "Xin chào! Tôi có thể giúp gì cho bạn?",
-      time: "Sat Aug 17 2024 13:00:00 GMT+0700 (Giờ Đông Dương)",
+      text: "Xin chào! Tôi có thể tư vấn cho bạn ngay bây giờ.",
+      time: new Date(),
       avatar: chatbot, // Link đến ảnh avatar của bot
     },
-    {
-      sender: "user",
-      text: "Tôi muốn biết thêm thông tin về sản phẩm.",
-      time: "Sat Aug 17 2024 13:00:30 GMT+0700 (Giờ Đông Dương)",
-    },
+    // {
+    //   sender: "user",
+    //   text: "Tôi muốn biết thêm thông tin về sản phẩm.",
+    //   time: new Date(),
+    // },
   ]);
 
   const toggleChat = () => setShowChat(!showChat);
@@ -105,11 +101,14 @@ const ChatPopover = () => {
     }, 50);
   };
 
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      handleSendMessage();
+    }
+  };
+
   return (
-    <Container
-      fluid
-      className="d-flex justify-content-end align-items-end vh-100"
-    >
+    <Container fluid>
       <OverlayTrigger
         trigger="click"
         placement="top"
@@ -117,26 +116,25 @@ const ChatPopover = () => {
         overlay={
           <Popover
             id="chat-popover"
-            className="w-100"
-            style={{ maxWidth: "500px" }}
+            // className="w-100"
+            style={{ maxWidth: "500px", width: "97%" }}
           >
             <Popover.Header as="h3">Trò chuyện với AI</Popover.Header>
-            <Popover.Body>
+            <Popover.Body className="p-2">
               <div style={{ height: "300px", overflowY: "auto" }}>
                 <ChatLayout
                   messages={messages}
                   endOfMessagesRef={endOfMessagesRef}
                 />
               </div>
-              <div className="d-flex align-items-center gap-2  mt-2">
-                <input
+              <div className="d-flex align-items-center gap-2 mt-2">
+                <Form.Control
                   type="text"
-                  className="form-control"
                   placeholder="Nhập tin nhắn..."
                   value={text}
                   onChange={handleChangeText}
+                  onKeyDown={handleKeyPress}
                 />
-
                 <Button variant="outline-light" onClick={handleSendMessage}>
                   <i
                     className="fas fa-paper-plane text-primary"
@@ -148,7 +146,11 @@ const ChatPopover = () => {
           </Popover>
         }
       >
-        <Button variant="primary" className="mb-4 me-4" onClick={toggleChat}>
+        <Button
+          variant="primary"
+          className="position-fixed end-0 bottom-0 me-3 mb-3 p-2"
+          onClick={toggleChat}
+        >
           <Image
             src={chatbot}
             roundedCircle
