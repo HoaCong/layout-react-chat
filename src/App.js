@@ -159,17 +159,33 @@ const ChatPopover = () => {
           </Popover>
         }
       >
-        <Button
-          variant="primary"
-          className="position-fixed end-0 bottom-0 me-3 mb-3 p-2"
-          onClick={toggleChat}
-        >
-          <Image
-            src={chatbot}
-            roundedCircle
-            style={{ width: "40px", height: "40px" }}
-          />
-        </Button>
+        <div className="position-fixed end-0 bottom-0 me-3 mb-3">
+          <Button variant="primary" className="p-2" onClick={toggleChat}>
+            <Image
+              src={chatbot}
+              roundedCircle
+              style={{ width: "40px", height: "40px" }}
+            />
+          </Button>
+          {!showChat && (
+            <div
+              className="position-absolute bottom-100 end-0"
+              style={{
+                width: 300,
+                maxWidth: "100vw",
+                marginBottom: 9,
+              }}
+            >
+              <div class="custom-popover rounded-4">
+                <div id="custom" class="popover-arrow"></div>
+                <div class="popover-body">
+                  <h4>Trợ lý AI</h4>
+                  <p>Tôi có thể tư vấn cho bạn ngay bây giờ.</p>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
       </OverlayTrigger>
     </Container>
   );

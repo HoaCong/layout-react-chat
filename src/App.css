@@ -1,0 +1,51 @@
+/* Basic styles for the button */
+.popover-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Basic styles for the popover */
+.custom-popover {
+  position: absolute;
+  bottom: 100%; /* Position the popover above the button */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  z-index: 1000;
+  padding: 10px;
+  display: block; /* Always show the popover */
+}
+
+#custom.popover-arrow {
+  position: absolute;
+  bottom: -7px;
+  right: 37px;
+  width: 0;
+  height: 0;
+}
+#custom.popover-arrow::before {
+  content: "";
+  position: absolute;
+  top: -8px; /* Adjust to position the arrow above the popover */
+  border-width: 8px 8px 0 8px; /* Define the arrow's size and shape */
+  border-style: solid;
+  border-color: #fff transparent transparent transparent; /* Adjust the color to match the popover background */
+}
+
+/* Optionally, add box-shadow to the popover arrow */
+#custom.popover-arrow::after {
+  content: "";
+  position: absolute;
+  top: -6.6px; /* Adjust to position the shadow above the arrow */
+  border-width: 8px 8px 0 8px; /* Match the border-width of the main arrow */
+  border-style: solid;
+  border-color: #ddd transparent transparent transparent; /* Shadow color */
+  z-index: -1; /* Ensure the shadow is behind the arrow */
+}
