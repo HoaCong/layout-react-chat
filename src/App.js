@@ -121,7 +121,18 @@ const ChatPopover = () => {
             // className="w-100"
             style={{ maxWidth: "500px", width: "97%" }}
           >
-            <Popover.Header as="h3">Trò chuyện với AI</Popover.Header>
+            <Popover.Header as="h3" className="p-0">
+              <div className=" d-flex align-items-center justify-content-between">
+                <span className="ms-3">Trò chuyện với AI</span>
+                <Button
+                  variant="text-light"
+                  className="py-0 text-secondary"
+                  onClick={toggleChat}
+                >
+                  <i className="fas fa-window-minimize pb-3"></i>
+                </Button>
+              </div>
+            </Popover.Header>
             <Popover.Body className="p-2">
               <div style={{ height: "300px", overflowY: "auto" }}>
                 <ChatLayout
